@@ -1,0 +1,17 @@
+from tddspry.django import HttpTestCase
+
+from django.conf import settings
+
+
+class TestLoginPage(HttpTestCase):
+
+    def test_login(self):
+        user = self.helper('create_user', 'username', 'password')
+        self.login('username', 'password')
+        self.url(settings.LOGIN_REDIRECT_URL)
+
+    def test_logout(self):
+        user = self.helper('create_user', 'username', 'password')
+        self.login('username', 'password')
+        self.logout()
+        self.url('/')

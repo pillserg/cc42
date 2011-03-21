@@ -1,4 +1,5 @@
 from tddspry.django import HttpTestCase, DatabaseTestCase
+from tddspry import NoseTestCase
 
 from django.conf import settings
 
@@ -67,7 +68,15 @@ class Test_MainPageBio(HttpTestCase):
 
 #-------------------I'm here now
         
-
+class TestContactsForm(NoseTestCase):
     
+    def test_aceppting_valid_data(self):
+        pass
+    def test_not_accepting_invalid_data(self):
+        pass
+    
+class TestContactForm(DatabaseTestCase):
+    def test_save_form(self):
+        pass
 
     

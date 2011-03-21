@@ -46,5 +46,23 @@ class Test_last_request_middleware_to_DB(DatabaseTestCase):
         ReqObj = SavedRequest.objects.get(method='GET')
         self.assert_delete(ReqObj)
         
-#class Test_last_request_middleware_shows_on_page(HttpTestCase):
-#    pass
+class Test_last_request_middleware_shows_on_page(HttpTestCase):
+    
+    def test_request_link(self):
+        self.go('/')
+        self.find('requests')
+    
+    def test_request_info_in_place(self):
+        self.go('last-requests/')
+        last_request = SavedRequest.objects.all()[0]
+        self.find(last_request.ip)
+        self.find(last_request.path)
+        self.find(last_request.method)
+        self.find(last_request.referer)
+        self.find(last_request.user_agent)
+        self.find(last_request.language)
+        
+        
+        
+        
+    

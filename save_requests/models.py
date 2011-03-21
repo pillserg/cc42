@@ -26,7 +26,7 @@ class SavedRequest(models.Model):
         ordering = ['-time',]
     
     def __unicode__(self):
-        return u'[%s] %s %s' % (self.time, self.method, self.path)
+        return u'%s [%s] %s %s' % (self.ip, self.time, self.method, self.path)
     
     def from_http_request(self, request, response=None, commit=True):
         # Request infomation

@@ -42,25 +42,25 @@ class Test_contacts_UserDetailModel(DatabaseTestCase):
         UD = UserDetail.objects.get(name=self.test_details['name'])
         self.assert_delete(UD)
 
-#class TestMainPageBio(HttpTestCase, DatabaseTestCase):
-#    def userDetailMustBeOnMainPage(self):
-#        """
-#           Next things must be present on main page:
-#           Name, Last name, Contacts, Email: email, Jabber: JID,
-#           Skype: id, Other contacts: Multiline, Bio:, Multiline
-#           Date of birth"""
-#    details = UserDetail.objects.all()[0]
-#    self.go('/')
-#    self.find(details.name)
-#    self.find(details.last_name)
-#    self.find(details.contacts)
-#    self.find(details.email)
-#    self.find(details.jabber)
-#    self.find(details.skype)
-#    self.find(details.other_contacts)
-#    self.find(details.bio)
-#    self.find(details.date_of_birth)
 
-
+class Test_MainPageBio(HttpTestCase):
     
-
+    def test_userDetailMustBeOnMainPage(self):
+        """
+           Next things must be present on main page:
+           Name, Last name, Contacts, Email: email, Jabber: JID,
+           Skype: id, Other contacts: Multiline, Bio:, Multiline
+           Date of birth"""
+           
+        details = UserDetail.objects.all()[0]
+        print details.name
+        self.go('/')
+        self.find(details.name)
+        self.find(details.last_name)
+        self.find(details.contacts)
+        self.find(details.email)
+        self.find(details.jabber)
+        self.find(details.skype)
+        self.find(details.other_contacts)
+        self.find(details.bio, flat=True)
+        self.find(str(details.date_of_birth))

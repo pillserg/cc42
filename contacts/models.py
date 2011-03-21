@@ -11,3 +11,6 @@ class UserDetail(models.Model):
     other_contacts = models.TextField()
     bio = models.TextField()
     date_of_birth = models.DateField()
+    
+    def __unicode__(self):
+        return ' '.join((self.name, self.last_name))

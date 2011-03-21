@@ -65,18 +65,44 @@ class Test_MainPageBio(HttpTestCase):
         self.find(details.other_contacts)
         self.find(details.bio, flat=True)
         self.find(str(details.date_of_birth))
-
+        
 #-------------------I'm here now
         
 class TestContactsForm(NoseTestCase):
     
     def test_aceppting_valid_data(self):
-        pass
+        from cc42.contacts.forms import UserDetailForm
+        test_data = {
+            'name':'Sergey',
+            'last_name':'Piljavsky',
+            'contacts':'063-00-00-00',
+            'email':'pill@i.ua',
+            'jabber':'pillserg@jabber.ru',
+            'skype':'pillserg',
+            'other_contacts':'pill.sv0@gmail.com\
+                              ICQ:289861503',
+            'bio':'Born in Kiev (1987) \
+                   Graduated from NAU (2010)\
+                   Currently looking for work.',
+            'date_of_birth':'1987-09-03',
+        }
+        self.assert_false(form.is_bound)
+        form = UserDetailForm(test_data)
+        self.assert_true(form.is_bound)
+        self.assert_true(form.is_valid)
+
     def test_not_accepting_invalid_data(self):
         pass
     
-class TestContactForm(DatabaseTestCase):
-    def test_save_form(self):
-        pass
+#class TestContactForm(DatabaseTestCase):
+#    def test_save_form(self):
+#        pass
 
-    
+
+#class TestAuth(HttpTestCase):
+#    
+#    def test_login(self):
+#        self.login('admin','admin')
+#
+#    def test_logout(self):
+#        self.logout()

@@ -1,4 +1,5 @@
 from tddspry import NoseTestCase
+from tddspry.django import HttpTestCase
 
 from django.template import Template, Context, RequestContext
 from django.http import HttpRequest
@@ -16,7 +17,15 @@ class TestDjangoSettingsContextProcessor(NoseTestCase):
                               context,
                               context_instance=RequestContext(request)))
         self.find_in(MEDIA_URL, res)
-        
+
+
+class TestAuth(HttpTestCase):
+    
+    def test_login(self):
+        self.login('admin','admin', url='accounts/login/', formid=0)
+
+    def test_logout(self):
+        self.logout(url='accounts/logout/')
     
     
         

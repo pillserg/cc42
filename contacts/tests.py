@@ -64,3 +64,49 @@ class Test_MainPageBio(HttpTestCase):
         self.find(details.other_contacts)
         self.find(details.bio, flat=True)
         self.find(str(details.date_of_birth))
+
+#-------------------I'm here now
+        
+class Test_last_request_middleware_shows_on_DB_page(HttpTestCase):
+    
+    def test_last_request_on_page(self):
+        from cc42.save_requests.models import SavedRequests
+        last_rq = SavedRequests.objects.order_by('timestamp')[0]
+        self.go('/last_requests/')
+        self.find(last_rq) # change to some actually checkable value
+        
+    def test_new_request_gets_into_DB(self):
+        from cc42.save_requests.models import SavedRequests
+        # assumes thet requests in DB are ordered by date 
+        prew_rq = SavedRequests.objects.order_by('timestamp')[0]
+        self.go('/')
+        last_rq = SavedRequests.objects.order_by('timestamp')[0]
+        self.assertNotEqual(prew_rq, last_rq)
+        
+        
+    
+class Test_last_request_middleware_to_DB(DatabaseTestCase):
+    
+    from cc42.save_requests.models import SavedRequests
+    dummy_request = 'Dummy_request'
+    def make_test_obj(self):
+        SavedRequest.create(req=self.dummy_request)
+    
+    def test_create(self):
+        self.make_test_obj()
+    
+    def test_read(self):
+        self.make_test_obj()
+        self.assert_read(SavedRequest, req=self.dummy_request)
+        
+    def test_update(self):
+        self.make_test_obj()
+        self.assert_update(UserDetail, req='new_dummy_request')
+    
+    def test_delete(self):
+        self.make_test_obj()
+        ReqObj = UserDetail.objects.get(req=self.dummy_request)
+        self.assert_delete(ReqObj)
+    
+
+    

@@ -101,12 +101,3 @@ class TestContactForm(DatabaseTestCase):
         UD = UserDetail.objects.get(id=1)
         self.assert_equal(UD.name, test_data['name'])
     
-
-
-#class TestAuth(HttpTestCase):
-#    
-#    def test_login(self):
-#        self.login('admin','admin')
-#
-#    def test_logout(self):
-#        self.logout()

@@ -5,25 +5,27 @@ from django.conf import settings
 
 from cc42.contacts.models import UserDetail
 
-class Test_contacts_UserDetailModel(DatabaseTestCase):
-    
-    test_details = {
-        'name':'Jone',
-        'last_name':'Dow',
-        'contacts':'Kiev',
-        'email':'jd@i.ua',
-        'jabber':'jd@jabber.ru',
-        'skype':'12314325',
-        'other_contacts':'twitter\nfacebook',
-        'bio':'born here\nlived there',
-        'date_of_birth':'1987-10-25'
-        
+test_data = {
+    'name':'Serg',
+    'last_name':'Piljavsky',
+    'contacts':'063-00-00-00',
+    'email':'pill@i.ua',
+    'jabber':'pillserg@jabber.ru',
+    'skype':'pillserg',
+    'other_contacts':'pill.sv0@gmail.com\
+                      ICQ:289861503',
+    'bio':'Born in Kiev (1987) \
+           Graduated from NAU (2010)\
+           Currently looking for work.',
+    'date_of_birth':'1987-09-03',
     }
-    
+
+class Test_contacts_UserDetailModel(DatabaseTestCase):
+
     new_name = 'Jane'
     
     def make_test_obj(self):
-        kw_str = ', '.join(['='.join((str(k),("'''"+str(v)+"'''"))) for k,v in self.test_details.items()])
+        kw_str = ', '.join(['='.join((str(k),("'''"+str(v)+"'''"))) for k,v in test_data.items()])
         run_str = 'self.assert_create(UserDetail, %s)'%kw_str
         eval(run_str)
     
@@ -32,7 +34,7 @@ class Test_contacts_UserDetailModel(DatabaseTestCase):
     
     def test_read(self):
         self.make_test_obj()
-        self.assert_read(UserDetail, name = self.test_details['name'])
+        self.assert_read(UserDetail, name = test_data['name'])
         
     def test_update(self):
         self.make_test_obj()
@@ -40,7 +42,7 @@ class Test_contacts_UserDetailModel(DatabaseTestCase):
     
     def test_delete(self):
         self.make_test_obj()
-        UD = UserDetail.objects.get(name=self.test_details['name'])
+        UD = UserDetail.objects.get(name=test_data['name'])
         self.assert_delete(UD)
 
 
@@ -69,34 +71,36 @@ class Test_MainPageBio(HttpTestCase):
 #-------------------I'm here now
         
 class TestContactsForm(NoseTestCase):
-    
+
     def test_aceppting_valid_data(self):
         from cc42.contacts.forms import UserDetailForm
-        test_data = {
-            'name':'Sergey',
-            'last_name':'Piljavsky',
-            'contacts':'063-00-00-00',
-            'email':'pill@i.ua',
-            'jabber':'pillserg@jabber.ru',
-            'skype':'pillserg',
-            'other_contacts':'pill.sv0@gmail.com\
-                              ICQ:289861503',
-            'bio':'Born in Kiev (1987) \
-                   Graduated from NAU (2010)\
-                   Currently looking for work.',
-            'date_of_birth':'1987-09-03',
-        }
+        from cc42.contacts.models import UserDetail
+
+        form = UserDetailForm(instance=UserDetail.objects.get(id=1))
         self.assert_false(form.is_bound)
-        form = UserDetailForm(test_data)
+        form = UserDetailForm(test_data, instance=UserDetail.objects.get(id=1))
         self.assert_true(form.is_bound)
-        self.assert_true(form.is_valid)
+        self.assert_true(form.is_valid())
 
     def test_not_accepting_invalid_data(self):
         pass
+
+class TestContactFormPage(HttpTestCase):
+    def test_show_form(self):
+        self.go('/edit-contacts/')
+        
     
-#class TestContactForm(DatabaseTestCase):
-#    def test_save_form(self):
-#        pass
+class TestContactForm(DatabaseTestCase):
+    
+    def test_save_form(self):
+        from cc42.contacts.forms import UserDetailForm
+        from cc42.contacts.models import UserDetail
+        
+        form = UserDetailForm(test_data, instance=UserDetail.objects.get(id=1))
+        form.save()
+        UD = UserDetail.objects.get(id=1)
+        self.assert_equal(UD.name, test_data['name'])
+    
 
 
 #class TestAuth(HttpTestCase):

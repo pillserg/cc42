@@ -27,8 +27,11 @@
     <hr>
         <div id='menu'>
             {% block menu %}
-                <a href={% url show_main_page%}>Mainpage</a> <br>
-                <a href={% url show_last_requests%}>Requests</a>
+                <a href={% url show_main_page %}>Mainpage</a> <br>
+                <a href={% url show_last_requests %}>Requests</a><br>
+                <a href={% url show_edit_contacts %}>Edit</a>
+                
+                
             {% endblock %}
         </div>
         

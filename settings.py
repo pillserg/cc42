@@ -74,6 +74,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'cc42.save_requests.middleware.SaveEveryIncomingRequestToDB'
 )
 
 ROOT_URLCONF = 'cc42.urls'
@@ -91,4 +92,5 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'cc42.contacts',
+    'cc42.save_requests'
 )

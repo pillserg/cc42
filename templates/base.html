@@ -17,18 +17,21 @@
 
 {% block body %}
     <body>
-        <div id='menu'>
-            {% block menu %}
-                menu:
-            {% endblock %}
-        </div>
+
     
     <div id='content'>
         {% block content %}
             content:
         {% endblock %}
     </div>
-    
+    <hr>
+        <div id='menu'>
+            {% block menu %}
+                <a href={% url show_main_page%}>Mainpage</a> <br>
+                <a href={% url show_last_requests%}>Requests</a>
+            {% endblock %}
+        </div>
+        
     </body>
 {% endblock %}
 

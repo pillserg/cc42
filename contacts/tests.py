@@ -64,3 +64,10 @@ class Test_MainPageBio(HttpTestCase):
         self.find(details.other_contacts)
         self.find(details.bio, flat=True)
         self.find(str(details.date_of_birth))
+
+#-------------------I'm here now
+        
+
+    
+
+    

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content%}
+    <ul>
+    {% for request in requests%}
+        <li>{{request}}</li>
+        {% if forloop.first %}
+            <ul>
+            <li>path{{request.path}}</li>
+            <li>ip:{{request.ip}}</li>
+            <li>time:{{request.time}}</li>
+            <li>method:{{request.method}}</li>
+            <li>referer:{{request.referer}}</li>
+            <li>user_agent:{{request.user_agent}}</li>
+            <li>lang:{{request.language}}</li>
+            <li>is_secure:{{request.is_secure}}</li>
+            <li>is_ajax:{{request.is_ajax}}</li>
+            </ul>
+        {% endif %}
+    {% endfor%}
+    <ul>
+{% endblock %}

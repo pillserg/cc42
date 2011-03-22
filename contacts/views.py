@@ -21,6 +21,7 @@ def showEditContactsPage(request):
         if form.is_valid:
             form.save()
             return HttpResponseRedirect('/')
+        #forgot to process errors
         
     form = UserDetailForm(instance=contacts)    
     context = {

@@ -104,5 +104,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'cc42.contacts',
-    'cc42.save_requests'
+    'cc42.save_requests',
+    'cc42.templatelib',
+    
 )

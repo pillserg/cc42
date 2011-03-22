@@ -25,8 +25,13 @@ def showEditContactsPage(request):
     form = UserDetailForm(instance=contacts)    
     context = {
         'contacts':contacts,
-        'form':form
+        'form':form,
+        'fields_left':['name','last_name', 'date_of_birth', 'form.bio',],
+        'fields_right':['email','jabber','contacts','skype','other_contacts',]
+        
+            
     }
     return render_to_response('edit-contacts.html',
                               context,
                               context_instance = RequestContext(request))
+    

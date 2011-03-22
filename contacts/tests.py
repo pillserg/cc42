@@ -20,7 +20,7 @@ test_data = {
     'date_of_birth':'1987-09-03',
     }
 
-class Test_contacts_UserDetailModel(DatabaseTestCase):
+class TestContactsUserDetailModel(DatabaseTestCase):
 
     new_name = 'Jane'
     

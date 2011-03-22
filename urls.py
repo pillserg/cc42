@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 
 from cc42.contacts.views import showMainPage, showEditContactsPage
 from cc42.save_requests.views import showLast10requests
+from cc42 import settings
 
 admin.autodiscover()
 
@@ -28,4 +29,17 @@ urlpatterns = patterns('',
          'next_page':'/'},
         name='auth_logout'),
     
+    
+    
 )
+
+urlpatterns += patterns('',
+    (r'^admin/jsi18n/', 'django.views.i18n.javascript_catalog'),
+)
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^static/(?P<path>.*)$',
+        'django.views.static.serve',
+        {'document_root': settings.MEDIA_ROOT}),
+    )

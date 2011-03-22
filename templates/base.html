@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     
     <title>{%block title%}42cc-test pill{% endblock %}</title>
-
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css" media="screen, projection" />
     {% block extra_head %}
         
     {% endblock %}
@@ -18,7 +18,7 @@
 {% block body %}
     <body>
 
-    
+    <div id="wrapper">
     <div id='content'>
         {% block content %}
             content:
@@ -36,7 +36,7 @@
                 
             {% endblock %}
         </div>
-        
+    </div>
     </body>
 {% endblock %}
 

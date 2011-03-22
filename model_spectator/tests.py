@@ -7,7 +7,7 @@ from cc42.model_spectator.models import ModelChange
 class Test_onModelChangeEntryMustBeAddeToDB(DatabaseTestCase):
         
     def test_create(self):
-        self.assert_create(ModelChange, full_name='test')
+        self.assert_create(ModelChange, name='test')
     
     def test_read(self):
         ModelChange.objects.create(name='test12345')
@@ -23,16 +23,16 @@ class Test_onModelChangeEntryMustBeAddeToDB(DatabaseTestCase):
                 ('1', 'Created_or_Updated'),
                 ('2', 'Deleted'),
             )
-
+    
         User.objects.create_user('test_user','test@user.user')
-        u = User.objects.get(name='test_user')
+        u = User.objects.get(email='test@user.user')
         last_entry = ModelChange.objects.all()[0]
-        self.assert_equal(last_entry.name, u.__name__)
+        self.assert_equal(last_entry.name, u.username)
         self.assert_equal(last_entry.status, '1')
         u.name = 'test_user2'
         u.save()
         last_entry = ModelChange.objects.all()[0]
-        self.assert_equal(last_entry.name, u.__name__)
+        self.assert_equal(last_entry.name, u.username)
         self.assert_equal(last_entry.status, '1')
         u.delete()
         last_entry = ModelChange.objects.all()[0]

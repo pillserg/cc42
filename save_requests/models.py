@@ -4,11 +4,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class SavedRequest(models.Model):    
+class SavedRequest(models.Model):
+    
     # Request infomation
     method = models.CharField(default='GET', max_length=7)
     path = models.CharField(max_length=255)
     time = models.DateTimeField(default=datetime.now)
+    priority = models.IntegerField(default=0)
     
     # User infomation
     ip = models.IPAddressField()
@@ -25,7 +27,7 @@ class SavedRequest(models.Model):
     def __unicode__(self):
         return u'%s [%s] %s %s' % (self.ip, self.time, self.method, self.path)
     
-    def from_http_request(self, request, response=None, commit=True):
+    def from_http_request(self, request, commit=True, priority=0):
         # Request infomation
         self.method = request.method
         self.path = request.path
@@ -39,6 +41,9 @@ class SavedRequest(models.Model):
         if getattr(request, 'user', False):
             if request.user.is_authenticated():
                 self.user = request.user
+        if priority != 0:
+            self.priority = priority
+        
         
         if commit:
             self.save()

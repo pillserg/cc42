@@ -26,7 +26,7 @@ class Test_last_request_middleware_to_DB(DatabaseTestCase):
     
     def make_test_obj(self):
         r = SavedRequest()
-        r.from_http_request(self.dummy_request)
+        r.from_http_request(self.dummy_request,)
     
     def test_create(self):
         self.make_test_obj()
@@ -43,6 +43,12 @@ class Test_last_request_middleware_to_DB(DatabaseTestCase):
         self.make_test_obj()
         ReqObj = SavedRequest.objects.get(method='GET')
         self.assert_delete(ReqObj)
+        
+    def test_priority(self):
+        r = SavedRequest()
+        r.from_http_request(self.dummy_request, priority = 5)
+        SR = SavedRequest.objects.all().order_by('priority')[0]
+        self.assert_equal(SR.priority, 5)
         
 class Test_last_request_middleware_shows_on_page(HttpTestCase):
     
@@ -68,6 +74,10 @@ class Test_last_request_middleware_shows_on_page(HttpTestCase):
         last_request = SavedRequest.objects.all()[0]
         self.notfind(' static/css/base.css')
             
+    def test_if_priority_links_in_place(self):
+        self.go('last-requests/')
+        self.find('>sort by time<')
+        self.find('>sort by priority<')
         
         
         

@@ -17,6 +17,11 @@ urlpatterns = patterns('',
     url(r'^$', showMainPage, name='show_main_page'),
     url(r'^last-requests/$',showLast10requests, name='show_last_requests'),
     url(r'^edit-contacts/$',showEditContactsPage, name='show_edit_contacts'),
+    url(r'^last-requests/by-priority$',
+        showLast10requests,
+        {'sort_by':'priority'},
+        name='show_last_requests_by_priority'),
+    
     
     #auth
     url(r'^accounts/login/$',

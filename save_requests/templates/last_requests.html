@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block content%}
+    <a href={% url show_last_requests_by_priority %}>sort by priority</a> |
+    <a href={% url show_last_requests %}>sort by time</a>
     <ul>
     {% for request in requests%}
         <li>{{request}}</li>
@@ -14,6 +16,7 @@
             <li>lang:{{request.language}}</li>
             <li>is_secure:{{request.is_secure}}</li>
             <li>is_ajax:{{request.is_ajax}}</li>
+            <li>priority:<b>{{request.priority}}</b></li>
             </ul>
         {% endif %}
     {% endfor%}

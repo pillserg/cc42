@@ -4,8 +4,7 @@ class SaveEveryIncomingRequestToDB(object):
     def process_request(self, request):
         
         def include():
-            exclude_paths = ['/last-requests/']
-            if request.path in exclude_paths:
+            if request.path.startswith('/last-requests/'):
                 return False
             if request.path.startswith('/static/'):
                 return False

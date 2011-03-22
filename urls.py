@@ -28,4 +28,10 @@ urlpatterns = patterns('',
          'next_page':'/'},
         name='auth_logout'),
     
+    
+    
+)
+
+urlpatterns += patterns('',
+    (r'^admin/jsi18n/', 'django.views.i18n.javascript_catalog'),
 )

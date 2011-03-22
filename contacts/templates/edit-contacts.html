@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% block extra_head %}
+  {{form.media}}
+{% endblock %}
+
 {% block content %}
   <form action="." method="post" class="user_profile_edit" enctype="multipart/form-data">{% csrf_token %}
     <table>

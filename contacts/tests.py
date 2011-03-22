@@ -86,8 +86,34 @@ class TestContactsForm(NoseTestCase):
         pass
 
 class TestContactFormPage(HttpTestCase):
-    def test_show_form(self):
+    
+    def test_edit_form_login_req(self):
         self.go('/edit-contacts/')
+        self.notfind('user_profile_edit')
+        
+    def test_edit_form_accepts_login(self):
+        self.login('admin','admin')
+        self.go('/edit-contacts/')
+        self.find('user_profile_edit')
+        
+    def test_form_fails_on_invalid_data(self):
+        self.login('admin','admin')
+        self.go('/edit-contacts/')
+        self.fv('1','email','Wrong_email')
+        self.fv('1','name', '')
+        
+        self.submit()
+        self.find('errorlist')
+    
+    def test_passes_on_valid_data(self):
+        self.login('admin','admin')
+        self.go('/edit-contacts/')
+        
+        for k,v in test_data.items():
+            self.fv('1', k, v)    
+        self.submit()
+        self.url('/')
+        
         
     
 class TestContactForm(DatabaseTestCase):

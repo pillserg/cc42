@@ -5,28 +5,32 @@
 
 {% block content %}
   <form action="." method="post" class="user_profile_edit" enctype="multipart/form-data">{% csrf_token %}
+  {% if form.errors %}
+    <p>Correct errors please</p>
+  {% endif %}
     <table>
         <tr>
             <td>
-                {{form.email}}<br>
-                {{form.jabber}}<br>
-                {{form.contacts}}<br>
-                {{form.skype}}<br>
+                {{form.email.errors}}{{form.email}}<br>
+                
+                {{form.jabber.errors}}{{form.jabber}}<br>
+                {{form.contacts.errors}}{{form.contacts}}<br>
+                {{form.skype.errors}}{{form.skype}}<br>
                 
             </td>
             <td>
-                {{form.name}}<br>
-                {{form.last_name}}<br>
-                {{form.date_of_birth}}<br>
+                {{form.name.errors}}{{form.name}}<br>
+                {{form.last_name.errors}}{{form.last_name}}<br>
+                {{form.date_of_birth.errors}}{{form.date_of_birth}}<br>
                 
             </td>
         </tr>
         <tr>
             <td>
-                {{form.other_contacts}}<br>
+                {{form.other_contacts.errors}}{{form.other_contacts}}<br>
             </td>
             <td>
-                {{form.bio}}<br>
+                {{form.bio.errors}}{{form.bio}}<br>
             </td>
         </tr>
     </table>

@@ -10,9 +10,6 @@ class SavedRequest(models.Model):
     path = models.CharField(max_length=255)
     time = models.DateTimeField(default=datetime.now)
     
-    is_secure = models.BooleanField(default=False)
-    is_ajax = models.BooleanField(default=False, help_text='Wheather this request was used via javascript.')
-    
     # User infomation
     ip = models.IPAddressField()
     user = models.ForeignKey(User, blank=True, null=True, verbose_name='user')
@@ -32,9 +29,6 @@ class SavedRequest(models.Model):
         # Request infomation
         self.method = request.method
         self.path = request.path
-        
-        self.is_secure = request.is_secure
-        self.is_ajax = request.is_ajax
         
         # User infomation
         self.ip = request.META.get('REMOTE_ADDR', '')

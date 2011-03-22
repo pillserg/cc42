@@ -4,8 +4,6 @@ from django.conf import settings
 
 from cc42.save_requests.models import SavedRequest
 
-
-        
     
 class Test_last_request_middleware_to_DB(DatabaseTestCase):
     
@@ -53,7 +51,8 @@ class Test_last_request_middleware_shows_on_page(HttpTestCase):
         self.find('requests')
     
     def test_request_info_in_place(self):
-        self.go('last-requests/')
+        self.go('/')
+        self.go('last-request/')
         last_request = SavedRequest.objects.all()[0]
         self.find(last_request.ip)
         self.find(last_request.path)
@@ -62,7 +61,15 @@ class Test_last_request_middleware_shows_on_page(HttpTestCase):
         self.find(last_request.user_agent)
         self.find(last_request.language)
         
+    def test_exclude_paths(self):
+        self.go('static/css/base.css')
+        self.go('/')
+        self.go('last-requests/')
+        last_request = SavedRequest.objects.all()[0]
+        self.notfind(' static/css/base.css')
+            
         
         
         
+    
     

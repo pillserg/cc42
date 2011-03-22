@@ -106,5 +106,6 @@ INSTALLED_APPS = (
     'cc42.contacts',
     'cc42.save_requests',
     'cc42.templatelib',
+    'cc42.extra_commands',
     
 )

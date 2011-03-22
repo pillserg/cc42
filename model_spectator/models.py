@@ -1,10 +1,13 @@
 from django.db import models
 
+from django.db.models.signals import post_save, post_delete
+
 # Create your models here.
 class ModelChange(models.Model):
     CHOICES = (
-                ('1', 'Created_or_Updated'),
-                ('2', 'Deleted'),
+                ('1', 'Created'),
+                ('2', 'Updated'),
+                ('3', 'Deleted')
               )
     name = models.CharField(max_length=100)
     status = models.CharField(max_length=100, choices=CHOICES)
@@ -14,3 +17,24 @@ class ModelChange(models.Model):
         ordering = ['-timestamp',]
     def __unicode__(self):
         return u'%s was %s at %s' % (self.name, self.status, self.timestamp)
+        
+
+def addDbEntryOnModelSave(sender, **kwargs):
+    if kwargs['created']:
+        status='Created'
+    else:
+        status='Updated'
+    instance = kwargs['instance']
+    if instance.__class__ != ModelChange and \
+                             'django.' not in str(instance.__class__):
+        ModelChange.objects.create(name=str(kwargs['instance']), status=status)
+
+
+def addDbEntryOnModelDelete(sender, **kwargs):
+    instance = kwargs['instance']
+    if instance.__class__ != ModelChange and \
+                             'django.' not in str(instance.__class__):
+        ModelChange.objects.create(name=str(kwargs['instance']), status='Deleted')
+
+post_save.connect(addDbEntryOnModelSave)
+post_delete.connect(addDbEntryOnModelDelete)

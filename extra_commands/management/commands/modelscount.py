@@ -1,9 +1,9 @@
 from django.core.management.base import AppCommand
 from django.core.management.base import BaseCommand
-from optparse import make_option
+import sys
+
 
 class Command( BaseCommand ):
-    option_list = BaseCommand.option_list
     help = 'Prints installed apps and models count for them.'
 
     requires_model_validation = True
@@ -16,8 +16,10 @@ class Command( BaseCommand ):
         
         apps = get_apps()
         for app in apps:
-            lines.append( "    %s" % app.__name__ )
+            lines.append( '    %s' % app.__name__ )
             for model in get_models( app ):
-                lines.append( "\t[%s]" % model.__name__ + (" - %s objects" % model._default_manager.count()) )
-
-        return "\n".join( lines ) + "\n"
+                lines.append( '\t[%s]' % model.__name__ +
+                             (' - %s objects' % model._default_manager.count()) )
+                
+        sys.stderr.write(  ''.join(( 'error: ','\n'.join(lines), '\n' ))  )
+        return '\n'.join( lines ) + '\n'

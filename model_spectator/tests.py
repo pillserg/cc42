@@ -42,7 +42,7 @@ class Test_onModelChangeEntryMustBeAddeToDB(DatabaseTestCase):
         last_entry = ModelChange.objects.all()[0]
         self.assert_equal(last_entry.name,
                           str(UserDetail.objects.get(name=test_data['name'])))
-        self.assert_equal(last_entry.status, 'Created')
+        self.assert_equal(last_entry.get_status_display(), 'Created')
     
     def test_update_signal(self):
         make_test_obj()
@@ -51,7 +51,7 @@ class Test_onModelChangeEntryMustBeAddeToDB(DatabaseTestCase):
         UD.save()
         last_entry = ModelChange.objects.all()[0]
         self.assert_equal(last_entry.name, str(UD))
-        self.assert_equal(last_entry.status, 'Updated')
+        self.assert_equal(last_entry.get_status_display(), 'Updated')
     
     def test_delete_signal(self):
         make_test_obj()
@@ -60,5 +60,5 @@ class Test_onModelChangeEntryMustBeAddeToDB(DatabaseTestCase):
         UD.delete()
         last_entry = ModelChange.objects.all()[0]
         self.assert_equal(last_entry.name, temp_repr)
-        self.assert_equal(last_entry.status, 'Deleted')
+        self.assert_equal(last_entry.get_status_display(), 'Deleted')
         

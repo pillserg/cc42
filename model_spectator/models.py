@@ -16,14 +16,14 @@ class ModelChange(models.Model):
     class Meta():
         ordering = ['-timestamp',]
     def __unicode__(self):
-        return u'%s was %s at %s' % (self.name, self.status, self.timestamp)
+        return u'%s was %s at %s' % (self.name, self.get_status_display(), self.timestamp)
         
 
 def addDbEntryOnModelSave(sender, **kwargs):
     if kwargs['created']:
-        status='Created'
+        status='1'
     else:
-        status='Updated'
+        status='2'
     instance = kwargs['instance']
     if instance.__class__ != ModelChange and \
                              'django.' not in str(instance.__class__):
@@ -34,7 +34,7 @@ def addDbEntryOnModelDelete(sender, **kwargs):
     instance = kwargs['instance']
     if instance.__class__ != ModelChange and \
                              'django.' not in str(instance.__class__):
-        ModelChange.objects.create(name=str(kwargs['instance']), status='Deleted')
+        ModelChange.objects.create(name=str(kwargs['instance']), status='3')
 
 post_save.connect(addDbEntryOnModelSave)
 post_delete.connect(addDbEntryOnModelDelete)

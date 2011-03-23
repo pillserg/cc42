@@ -1,7 +1,7 @@
+from django.conf import settings
+
 from tddspry.django import HttpTestCase, DatabaseTestCase
 from tddspry import NoseTestCase
-
-from django.conf import settings
 
 from cc42.contacts.models import UserDetail
 

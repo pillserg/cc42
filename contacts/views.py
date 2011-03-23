@@ -6,15 +6,16 @@ from django.template import RequestContext
 from cc42.contacts.models import UserDetail
 from cc42.contacts.forms import UserDetailForm
 
-def showMainPage(request):
+def show_main_page(request):
     context = {
         'contacts':UserDetail.objects.all()[0]
             }
     return render_to_response('mainpage.html',
                               context,
                               context_instance=RequestContext(request))
+
 @login_required
-def showEditContactsPage(request):
+def show_edit_contacts_page(request):
     contacts = get_object_or_404(UserDetail, id=1)
     if request.method == 'POST':
         form = UserDetailForm(request.POST, instance=contacts)
@@ -22,14 +23,15 @@ def showEditContactsPage(request):
             form.save()
             return HttpResponseRedirect('/')
         else:
-            form = UserDetailForm(request.POST,instance=contacts)
+            form = UserDetailForm(request.POST, instance=contacts)
             context = {
                        'contacts':contacts,
                        'form':form,
                        }
             return render_to_response('edit-contacts.html',
                                       context,
-                                      context_instance = RequestContext(request))
+                                      context_instance =
+                                      RequestContext(request))
         
     form = UserDetailForm(instance=contacts)  
     context = {

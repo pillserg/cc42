@@ -3,7 +3,7 @@ from tddspry.django import DatabaseTestCase
 from cc42.model_spectator.models import ModelChange
 from cc42.contacts.models import UserDetail
 
-test_data = {
+TEST_DATA = {
     'name':'Test',
     'last_name':'Testovich',
     'contacts':'063-00-00-00',
@@ -19,11 +19,14 @@ test_data = {
     }
 
 def make_test_obj():
-    kw_str = ', '.join(['='.join((str(k),("'''"+str(v)+"'''"))) for k,v in test_data.items()])
-    run_str = 'UserDetail.objects.create(%s)'%kw_str
+    """helper function creates UserDetail instance from test dictionary
+    must be rewritten due to its ugliness
+    """
+    kw_str = ', '.join(['='.join((str(k), ("'''" + str(v) + "'''"))) for k, v in TEST_DATA.items()])
+    run_str = 'UserDetail.objects.create(%s)' % kw_str
     eval(run_str)
 
-class Test_onModelChangeEntryMustBeAddeToDB(DatabaseTestCase):
+class TestOnModelChangeEntryMustBeAddeToDB(DatabaseTestCase):
         
     def test_create(self):
         self.assert_create(ModelChange, name='test')
@@ -33,31 +36,31 @@ class Test_onModelChangeEntryMustBeAddeToDB(DatabaseTestCase):
         self.assert_read(ModelChange, name='test12345')
         
     def test_update(self):
-        MC = ModelChange(name='test12345')
-        MC.save()
-        self.assert_update(MC, name='test54321')
+        model_change = ModelChange(name='test12345')
+        model_change.save()
+        self.assert_update(model_change, name='test54321')
 
     def test_create_signal(self):
         make_test_obj()
         last_entry = ModelChange.objects.all()[0]
         self.assert_equal(last_entry.name,
-                          str(UserDetail.objects.get(name=test_data['name'])))
+                          str(UserDetail.objects.get(name=TEST_DATA['name'])))
         self.assert_equal(last_entry.get_status_display(), 'Created')
     
     def test_update_signal(self):
         make_test_obj()
-        UD = UserDetail.objects.get(name=test_data['name'])
-        UD.name = 'Dummy'
-        UD.save()
+        user_detail_instance = UserDetail.objects.get(name=TEST_DATA['name'])
+        user_detail_instance.name = 'Dummy'
+        user_detail_instance.save()
         last_entry = ModelChange.objects.all()[0]
-        self.assert_equal(last_entry.name, str(UD))
+        self.assert_equal(last_entry.name, str(user_detail_instance))
         self.assert_equal(last_entry.get_status_display(), 'Updated')
     
     def test_delete_signal(self):
         make_test_obj()
-        UD = UserDetail.objects.get(name=test_data['name'])
-        temp_repr = str(UD)
-        UD.delete()
+        user_detail_instance = UserDetail.objects.get(name=TEST_DATA['name'])
+        temp_repr = str(user_detail_instance)
+        user_detail_instance.delete()
         last_entry = ModelChange.objects.all()[0]
         self.assert_equal(last_entry.name, temp_repr)
         self.assert_equal(last_entry.get_status_display(), 'Deleted')

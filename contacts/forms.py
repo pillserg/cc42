@@ -1,9 +1,7 @@
 from django import forms
 from django.forms.widgets import DateInput
-from django.forms.extras.widgets import SelectDateWidget
+
 import cc42.settings as settings
-
-
 from cc42.contacts.models import UserDetail
 
 class CalendarWidget(forms.TextInput):
@@ -21,7 +19,10 @@ class CalendarWidget(forms.TextInput):
         }
 
     def __init__(self, attrs={}):
-        super(CalendarWidget, self).__init__(attrs={'class': 'vDateField', 'size': '10'})
+        super(CalendarWidget, self).__init__(
+            attrs={'class': 'vDateField', 'size': '10'}
+            )
+
 
 class UserDetailForm(forms.ModelForm):
     class Meta:

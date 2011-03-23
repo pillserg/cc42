@@ -5,17 +5,16 @@ from django.contrib.auth.models import User
 
 
 class SavedRequest(models.Model):
-    
     # Request infomation
     method = models.CharField(default='GET', max_length=7)
     path = models.CharField(max_length=255)
     time = models.DateTimeField(default=datetime.now)
     priority = models.IntegerField(default=0)
-    
     # User infomation
     ip = models.IPAddressField()
     user = models.ForeignKey(User, blank=True, null=True, verbose_name='user')
-    referer = models.URLField(verify_exists=False, max_length=255, blank=True, null=True)
+    referer = models.URLField(verify_exists=False, max_length=255,
+                              blank=True, null=True)
     user_agent = models.CharField(max_length=255, blank=True, null=True)
     language = models.CharField(max_length=255, blank=True, null=True)
     
@@ -31,7 +30,6 @@ class SavedRequest(models.Model):
         # Request infomation
         self.method = request.method
         self.path = request.path
-        
         # User infomation
         self.ip = request.META.get('REMOTE_ADDR', '')
         self.referer = request.META.get('HTTP_REFERER', '')[:255]
@@ -43,7 +41,6 @@ class SavedRequest(models.Model):
                 self.user = request.user
         if priority != 0:
             self.priority = priority
-        
         
         if commit:
             self.save()

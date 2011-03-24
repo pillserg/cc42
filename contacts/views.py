@@ -33,7 +33,7 @@ def show_edit_contacts_page(request):
                                       context_instance =
                                       RequestContext(request))
         
-    form = UserDetailForm(instance=contacts)  
+    form = UserDetailForm(instance=contacts)
     context = {
         'contacts':contacts,
         'form':form,
@@ -41,4 +41,4 @@ def show_edit_contacts_page(request):
     return render_to_response('edit-contacts.html',
                               context,
                               context_instance = RequestContext(request))
-    
+

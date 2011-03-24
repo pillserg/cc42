@@ -1,5 +1,7 @@
 import re
+
 from django import template
+from django.core.urlresolvers import reverse
 
 register = template.Library()
 
@@ -11,10 +13,8 @@ def obj_to_admin(obj):
     """
     # Rewrite this using reverse
     try:
-        s = str(obj.__class__)
-        ls = s[1:-1].replace("'",'').split()[1].split('.')
-        url = '/'.join(('admin', ls[1], ls[-1].lower(), str(1)))
-        return '<a href=%s>Edit(admin)</a>' % url
+        return reverse("admin:%s_%s_change" % (obj._meta.app_label,
+                                           obj._meta.module_name),
+                                           args=(obj.id,))
     except:
         return ''
-    

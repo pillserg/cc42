@@ -24,26 +24,6 @@ def show_edit_contacts_page(request):
             return HttpResponseRedirect(reverse('show_main_page'))
         else:
             form = UserDetailForm(request.POST, instance=contacts)
-<<<<<<< HEAD
-            context = {
-                       'contacts':contacts,
-                       'form':form,
-                       }
-            return render_to_response('edit-contacts.html',
-                                      context,
-                                      context_instance =
-                                      RequestContext(request))
-        
-    form = UserDetailForm(instance=contacts)
-    context = {
-        'contacts':contacts,
-        'form':form,
-    }
-    return render_to_response('edit-contacts.html',
-                              context,
-                              context_instance = RequestContext(request))
-
-=======
     else:
         form = UserDetailForm(instance=contacts)
     
@@ -51,4 +31,3 @@ def show_edit_contacts_page(request):
     return render_to_response('edit-contacts.html',
                         context_instance = RequestContext(request, context))
     
->>>>>>> t7_form_reverse_redo

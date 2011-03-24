@@ -105,3 +105,25 @@ class TestLastRequestsByPriorityShowsOnPage(HttpTestCase):
         self.submit()
         self.find('errorlist')
         
+    def test_change_priority_for_all_requests_from_same_ip(self):
+        self.go(reverse('show_main_page'))
+        self.go(reverse('show_last_requests'))
+        self.fv('1','priority','100')
+        self.fv('1','for_all_by_ip', True)
+        self.fv('1','for_all_by_path', False)
+        self.submit()
+        requests = SavedRequest.objects.filter(ip="127.0.0.1")
+        for request in requests:
+            self.assert_equal(request.priority, 100)
+    
+    def test_change_priority_for_all_requests_from_same_path(self):
+        self.go('/admin/')
+        self.go(reverse('show_last_requests'))
+        self.fv('1','priority','100')
+        self.fv('1','for_all_by_ip', False)
+        self.fv('1','for_all_by_path', True)
+        self.submit()
+        requests = SavedRequest.objects.filter(path='"/admin/"')
+        for request in requests:
+            self.assert_equal(request.priority, 100)
+        

@@ -19,11 +19,23 @@
             <li>is_ajax:{{request.is_ajax}}</li>
             <li>priority:<b>{{request.priority}}</b></li>
             </ul>
+        
         {% endif %}
+        
         <form action="." method="post" class="priority_form" enctype="multipart/form-data">{% csrf_token %}
+        {% if request.assigned_form.errors %}
+            <p>Correct errors please</p>
+        {% endif %}
+        
+        
         {% for field in request.assigned_form %}
-            {{ field.label_tag }}{{ field }}
+            {{ field.errors }}
+            Set {{ field.label_tag }}{{ field }}
         {% endfor %}
+        <input type="hidden" name="request_ip" value="{{request.ip}}">
+        <input type="hidden" name="request_path" value="{{request.path}}">
+        <input type="hidden" name="request_id" value="{{request.id}}">
+        <input type="hidden" name="form_num" value="{{forloop.counter0}}">
         <button type="submit" name="submit" value="Submit">Save</button>
         </form>
         </p>

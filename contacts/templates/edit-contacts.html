@@ -11,26 +11,44 @@
     <table>
         <tr>
             <td>
-                {{form.email.errors}}{{form.email}}<br>
-                
-                {{form.jabber.errors}}{{form.jabber}}<br>
-                {{form.contacts.errors}}{{form.contacts}}<br>
-                {{form.skype.errors}}{{form.skype}}<br>
-                
+              {% for field in form %}
+                {% if forloop.counter < 5 %}
+                  <div class="fieldWrapper">
+                    {{ field.errors }}
+                    {% if 'Bio' in field.label_tag %}
+                      {{ field.label_tag }}:<br>
+                    {% else %}
+                      {{ field.label_tag }}:
+                    {% endif %}
+                    {{ field }}
+                  </div>
+                {% endif %}
+              {% endfor %}
             </td>
+            
             <td>
-                {{form.name.errors}}{{form.name}}<br>
-                {{form.last_name.errors}}{{form.last_name}}<br>
-                {{form.date_of_birth.errors}}{{form.date_of_birth}}<br>
+              {% for field in form %}
+                {% if forloop.counter > 4 %}
+                <div class="fieldWrapper">
+                    {{ field.errors }}
+                    {% if 'Other contacts' in field.label_tag %}
+                      {{ field.label_tag }}:<br>
+                    {% else %}
+                      {{ field.label_tag }}:
+                    {% endif %}
+                    {{ field }}
+                  </div>
+                {% endif %}
+              {% endfor %} 
                 
             </td>
         </tr>
         <tr>
             <td>
-                {{form.other_contacts.errors}}{{form.other_contacts}}<br>
+                
             </td>
             <td>
-                {{form.bio.errors}}{{form.bio}}<br>
+                
             </td>
         </tr>
     </table>

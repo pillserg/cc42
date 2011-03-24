@@ -36,14 +36,14 @@ class TestLastRequestSavedToDB(DatabaseTestCase):
     
     def test_delete(self):
         self.make_test_obj()
-        request_instance = SavedRequest.objects.get(method='GET')
+        request_instance = SavedRequest.objects.all()[0]
         self.assert_delete(request_instance)
  
-    def test_priority(self):
-        saved_req = SavedRequest()
-        saved_req.from_http_request(self.dummy_request, priority = 5)
-        saved_req = SavedRequest.objects.all().order_by('priority')[0]
-        self.assert_equal(saved_req.priority, 5)
+    #def test_priority(self):
+    #    saved_req = SavedRequest()
+    #    saved_req.from_http_request(self.dummy_request, priority = 5)
+    #    saved_req = SavedRequest.objects.all().order_by('priority')[0]
+    #    self.assert_equal(saved_req.priority, 5)
 
 
 class TestLastRequestsShowsOnPage(HttpTestCase):

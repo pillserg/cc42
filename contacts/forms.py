@@ -27,6 +27,7 @@ class CalendarWidget(forms.TextInput):
 class UserDetailForm(forms.ModelForm):
     class Meta:
         model = UserDetail
+
         widgets = {
             'date_of_birth':CalendarWidget(),
         }

@@ -6,7 +6,6 @@ from cc42.contacts.models import UserDetail
 TEST_DATA = {
     'name':'Test',
     'last_name':'Testovich',
-    'contacts':'063-00-00-00',
     'email':'test@i.ua',
     'jabber':'pillserg@jabber.ru',
     'skype':'pillserg',

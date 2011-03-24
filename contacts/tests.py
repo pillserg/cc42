@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from tddspry.django import HttpTestCase, DatabaseTestCase
 from tddspry import NoseTestCase
@@ -8,7 +9,6 @@ from cc42.contacts.models import UserDetail
 test_data = {
     'name':'Serg',
     'last_name':'Piljavsky',
-    'contacts':'063-00-00-00',
     'email':'pill@i.ua',
     'jabber':'pillserg@jabber.ru',
     'skype':'pillserg',
@@ -51,16 +51,14 @@ class Test_MainPageBio(HttpTestCase):
     def test_userDetailMustBeOnMainPage(self):
         """
            Next things must be present on main page:
-           Name, Last name, Contacts, Email: email, Jabber: JID,
+           Name, Last name, Email: email, Jabber: JID,
            Skype: id, Other contacts: Multiline, Bio:, Multiline
            Date of birth"""
-           
-        details = UserDetail.objects.all()[0]
-        print details.name
-        self.go('/')
+        if UserDetail.objects.count():   
+            details = UserDetail.objects.all()[0]
+        self.go(reverse('show_main_page'))
         self.find(details.name)
         self.find(details.last_name)
-        self.find(details.contacts)
         self.find(details.email)
         self.find(details.jabber)
         self.find(details.skype)
@@ -88,17 +86,17 @@ class TestContactsForm(NoseTestCase):
 class TestContactFormPage(HttpTestCase):
     
     def test_edit_form_login_req(self):
-        self.go('/edit-contacts/')
+        self.go(reverse('show_edit_contacts'))
         self.notfind('user_profile_edit')
         
     def test_edit_form_accepts_login(self):
         self.login('admin','admin')
-        self.go('/edit-contacts/')
+        self.go(reverse('show_edit_contacts'))
         self.find('user_profile_edit')
         
     def test_form_fails_on_invalid_data(self):
         self.login('admin','admin')
-        self.go('/edit-contacts/')
+        self.go(reverse('show_edit_contacts'))
         self.fv('1','email','Wrong_email')
         self.fv('1','name', '')
         
@@ -107,12 +105,12 @@ class TestContactFormPage(HttpTestCase):
     
     def test_passes_on_valid_data(self):
         self.login('admin','admin')
-        self.go('/edit-contacts/')
+        self.go(reverse('show_edit_contacts'))
         
         for k,v in test_data.items():
             self.fv('1', k, v)    
         self.submit()
-        self.url('/')
+        self.url(reverse('show_main_page'))
         
         
     

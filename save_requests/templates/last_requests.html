@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
+{% load extra_tags %}
+
 {% block content%}
-    <a href={% url show_last_requests_by_priority %}>sort by priority</a> |
-    <a href={% url show_last_requests %}>sort by time</a>
+    <a href={% url show_last_requests %}>sort by time</a> | 
+    <a href={% url show_last_requests_by_priority %}>sort by priority</a> | 
+    <a href={% url show_last_requests_by_neg_priority %}>sort by priority reverse</a> | 
     <ul>
     {% for request in requests%}
         <p>  
@@ -37,6 +40,7 @@
         <input type="hidden" name="request_id" value="{{request.id}}">
         <input type="hidden" name="form_num" value="{{forloop.counter0}}">
         <button type="submit" name="submit" value="Submit">Save</button>
+        <a href={% obj_to_admin request %}>edit(Admin)</a>
         </form>
         </p>
         <hr>

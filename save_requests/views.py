@@ -14,6 +14,7 @@ def show_last_requests(request, sort_by='time'):
     else:
         last_requests = SavedRequest.objects.all()[:10]
         
+        
     for req in last_requests:
             setattr(req, 'assigned_form', PriorityChangeForm())
             
@@ -38,8 +39,9 @@ def show_last_requests(request, sort_by='time'):
                         ['request_id']))
                 SR.priority = cd['priority']
                 SR.save()
-            
+           
             return HttpResponseRedirect(reverse('show_last_requests'))
+            
         else:
             setattr(submited_request, 'assigned_form',
                 PriorityChangeForm(request.POST))

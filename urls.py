@@ -21,6 +21,10 @@ urlpatterns = patterns('',
         show_last_requests,
         {'sort_by':'priority'},
         name='show_last_requests_by_priority'),
+    url(r'^last-requests/by-neg-priority$',
+        show_last_requests,
+        {'sort_by':'-priority'},
+        name='show_last_requests_by_neg_priority'),
     
     #auth
     url(r'^accounts/login/$',

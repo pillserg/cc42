@@ -100,8 +100,8 @@ class TestLastRequestsByPriorityShowsOnPage(HttpTestCase):
     def test_change_priority_declines_invalid_data(self):
         self.go(reverse('show_last_requests'))
         self.fv('1','priority','asdfasd')
-        self.fv('1','for_all_by_ip', '9090')
-        self.fv('1','for_all_by_path', 'asdad')
+        self.fv('1','for_all_by_ip', False)
+        self.fv('1','for_all_by_path', False)
         self.submit()
         self.find('errorlist')
         

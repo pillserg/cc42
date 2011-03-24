@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block content %}
-  <form action="." method="post" class="user_profile_edit" enctype="multipart/form-data">{% csrf_token %}
+  <form action="." method="post" class="" enctype="multipart/form-data">{% csrf_token %}
   {% if form.errors %}
     <p>Correct errors please</p>
   {% endif %}

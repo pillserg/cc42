@@ -37,5 +37,5 @@ class UserDetailForm(forms.ModelForm):
             'date_of_birth':CalendarWidget(),
         }
         
-
+    
 

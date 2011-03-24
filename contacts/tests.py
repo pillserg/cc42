@@ -99,14 +99,12 @@ class TestContactFormPage(HttpTestCase):
         self.go(reverse('show_edit_contacts'))
         self.fv('1','email','Wrong_email')
         self.fv('1','name', '')
-        
         self.submit()
         self.find('errorlist')
     
     def test_passes_on_valid_data(self):
         self.login('admin','admin')
         self.go(reverse('show_edit_contacts'))
-        
         for k,v in test_data.items():
             self.fv('1', k, v)    
         self.submit()

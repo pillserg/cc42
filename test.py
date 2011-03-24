@@ -1,23 +1,17 @@
-from tddspry import NoseTestCase
 from tddspry.django import HttpTestCase
 
 from django.template import Template, Context, RequestContext
 from django.http import HttpRequest
 from django.shortcuts import render_to_response
+from django.conf import settings
+from django.core.urlresolvers import reverse
 
-from cc42.settings import MEDIA_URL
-
-
-class TestDjangoSettingsContextProcessor(NoseTestCase):
+class TestDjangoSettingsContextProcessor(HttpTestCase):
     def test_it(self):
-        request = HttpRequest()
-        print request
-        context = {}
-        res = str(render_to_response('test.html',
-                              context,
-                              context_instance=RequestContext(request)))
-        self.find_in(MEDIA_URL, res)
-
+        self.go(reverse('show_main_page'))
+        self.find(settings.MEDIA_URL)
+        self.find(settings.TIME_ZONE)
+        
 
 class TestAuth(HttpTestCase):
     

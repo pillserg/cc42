@@ -25,6 +25,11 @@ class CalendarWidget(forms.TextInput):
 
 
 class UserDetailForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        #fields reversion
+        self.fields.keyOrder.reverse()
+
     class Meta:
         model = UserDetail
 

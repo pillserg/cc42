@@ -24,7 +24,10 @@ class SavedRequest(models.Model):
         ordering = ['-time',]
     
     def __unicode__(self):
-        return u'%s [%s] %s %s' % (self.ip, self.time, self.method, self.path)
+        return (u'request from %s to "%s" method %s at %s, priority: %s' %
+                    (self.ip, self.path, self.method,
+                     self.time.strftime('%Y-%m-%d %H:%M:%S'), self.priority))
+    from datetime import datetime
     
     def from_http_request(self, request, commit=True, priority=0):
         # Request infomation

@@ -27,7 +27,8 @@ def show_last_requests(request, sort_by='time'):
             cd = form.cleaned_data
             if cd['for_all_by_ip'] == True and cd['for_all_by_path'] == True:
                 SavedRequest.objects.filter(ip=request.POST['request_ip'],
-                    path =request.POST['request_path']).update(priority = cd['priority'])
+                    path =request.POST['request_path']).update(priority =
+                                                               cd['priority'])
             elif  form.cleaned_data['for_all_by_ip'] == True:
                 SavedRequest.objects.filter(ip=request.POST
                         ['request_ip']).update(priority = cd['priority'])
@@ -35,10 +36,10 @@ def show_last_requests(request, sort_by='time'):
                 SavedRequest.objects.filter(path=request.POST
                         ['request_path']).update(priority = cd['priority'])
             else:
-                SR = SavedRequest.objects.get(id=int(request.POST
-                        ['request_id']))
-                SR.priority = cd['priority']
-                SR.save()
+                saved_request_instance = SavedRequest.objects.get(id=
+                                                int(request.POST['request_id']))
+                saved_request_instance.priority = cd['priority']
+                saved_request_instance.save()
            
             return HttpResponseRedirect(reverse('show_last_requests'))
             

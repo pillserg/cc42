@@ -7,17 +7,17 @@ from tddspry import NoseTestCase
 from cc42.contacts.models import UserDetail
 
 test_data = {
-    'name':'Serg',
-    'last_name':'Piljavsky',
-    'email':'pill@i.ua',
-    'jabber':'pillserg@jabber.ru',
-    'skype':'pillserg',
-    'other_contacts':'pill.sv0@gmail.com\
+    'name': 'Serg',
+    'last_name': 'Piljavsky',
+    'email': 'pill@i.ua',
+    'jabber': 'pillserg@jabber.ru',
+    'skype': 'pillserg',
+    'other_contacts': 'pill.sv0@gmail.com\
                       ICQ:289861503',
-    'bio':'Born in Kiev (1987) \
+    'bio': 'Born in Kiev (1987) \
            Graduated from NAU (2010)\
            Currently looking for work.',
-    'date_of_birth':'1987-09-03',
+    'date_of_birth': '1987-09-03',
     }
 
 class TestContactsUserDetailModel(DatabaseTestCase):

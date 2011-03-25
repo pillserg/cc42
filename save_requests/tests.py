@@ -19,8 +19,8 @@ class DummyRequest(object):
 class TestLastRequestSavedToDB(DatabaseTestCase):
     
     def make_test_obj(self):
-        r = SavedRequest()
-        r.from_http_request(DummyRequest(),)
+        saved_request_inst = SavedRequest()
+        saved_request_inst.from_http_request(DummyRequest(),)
     
     def test_create(self):
         self.make_test_obj()
@@ -82,8 +82,8 @@ class TestLastRequestsByPriorityShowsOnPage(HttpTestCase):
         self.find('127.0.0.1')
         
     def test_priority_change_form(self):
-        r = SavedRequest()
-        r.from_http_request(DummyRequest(),priority=999)
+        saved_request_inst = SavedRequest()
+        saved_request_inst.from_http_request(DummyRequest(), priority=999)
         SavedRequest.objects.all().order_by('priority')
         self.go(reverse('show_last_requests_by_priority'))
         self.find('999')
@@ -91,26 +91,26 @@ class TestLastRequestsByPriorityShowsOnPage(HttpTestCase):
     def test_chnage_priority(self):
         """also check if form accepts valid data"""
         self.go(reverse('show_last_requests'))
-        self.fv('1','priority','999')
-        self.fv('1','for_all_by_ip', '0')
-        self.fv('1','for_all_by_path', '0')
+        self.fv('1', 'priority', '999')
+        self.fv('1', 'for_all_by_ip', '0')
+        self.fv('1', 'for_all_by_path', '0')
         self.submit()
         test_request = SavedRequest.objects.get(priority=999)
     
     def test_change_priority_declines_invalid_data(self):
         self.go(reverse('show_last_requests'))
-        self.fv('1','priority','asdfasd')
-        self.fv('1','for_all_by_ip', False)
-        self.fv('1','for_all_by_path', False)
+        self.fv('1', 'priority', 'asdfasd')
+        self.fv('1', 'for_all_by_ip', False)
+        self.fv('1', 'for_all_by_path', False)
         self.submit()
         self.find('errorlist')
         
     def test_change_priority_for_all_requests_from_same_ip(self):
         self.go(reverse('show_main_page'))
         self.go(reverse('show_last_requests'))
-        self.fv('1','priority','100')
-        self.fv('1','for_all_by_ip', True)
-        self.fv('1','for_all_by_path', False)
+        self.fv('1', 'priority', '100')
+        self.fv('1', 'for_all_by_ip', True)
+        self.fv('1', 'for_all_by_path', False)
         self.submit()
         requests = SavedRequest.objects.filter(ip="127.0.0.1")
         for request in requests:
@@ -119,9 +119,9 @@ class TestLastRequestsByPriorityShowsOnPage(HttpTestCase):
     def test_change_priority_for_all_requests_from_same_path(self):
         self.go('/admin/')
         self.go(reverse('show_last_requests'))
-        self.fv('1','priority','100')
-        self.fv('1','for_all_by_ip', False)
-        self.fv('1','for_all_by_path', True)
+        self.fv('1', 'priority', '100')
+        self.fv('1', 'for_all_by_ip', False)
+        self.fv('1', 'for_all_by_path', True)
         self.submit()
         requests = SavedRequest.objects.filter(path='"/admin/"')
         for request in requests:

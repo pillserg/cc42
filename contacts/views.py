@@ -22,12 +22,10 @@ def show_edit_contacts_page(request):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('show_main_page'))
-        else:
-            form = UserDetailForm(request.POST, instance=contacts)
     else:
         form = UserDetailForm(instance=contacts)
     
-    context = {'contacts':contacts,'form':form}
+    context = {'contacts': contacts, 'form': form}
     return render_to_response('edit-contacts.html',
                         context_instance = RequestContext(request, context))
     

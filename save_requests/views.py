@@ -16,7 +16,9 @@ def show_last_requests(request, sort_by='time'):
         
         
     for req in last_requests:
-            setattr(req, 'assigned_form', PriorityChangeForm())
+            setattr(req, 'assigned_form',
+                    PriorityChangeForm({"priority":req.priority})
+                    )
             
     if request.method == 'POST':
         submited_request = last_requests[int(request.POST['form_num'])]

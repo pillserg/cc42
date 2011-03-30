@@ -96,6 +96,7 @@ class TestLastRequestsByPriorityShowsOnPage(HttpTestCase):
         self.fv('1', 'for_all_by_path', '0')
         self.submit()
         test_request = SavedRequest.objects.get(priority=999)
+        
     
     def test_change_priority_declines_invalid_data(self):
         self.go(reverse('show_last_requests'))
@@ -126,4 +127,12 @@ class TestLastRequestsByPriorityShowsOnPage(HttpTestCase):
         requests = SavedRequest.objects.filter(path='"/admin/"')
         for request in requests:
             self.assert_equal(request.priority, 100)
-        
+    
+    def test_priority_must_be_in_field(self):
+        self.go(reverse('show_last_requests'))
+        self.fv('1', 'priority', '999')
+        self.fv('1', 'for_all_by_ip', '0')
+        self.fv('1', 'for_all_by_path', '0')
+        self.submit()
+        self.go(reverse('show_last_requests_by_priority'))
+        self.find('value="999"')

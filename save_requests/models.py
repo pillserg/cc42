@@ -27,7 +27,6 @@ class SavedRequest(models.Model):
         return (u'request from %s to "%s" method %s at %s' %
                     (self.ip, self.path, self.method,
                      self.time.strftime('%Y-%m-%d %H:%M:%S')))
-    from datetime import datetime
     
     def from_http_request(self, request, commit=True, priority=0):
         # Request infomation

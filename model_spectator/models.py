@@ -19,9 +19,11 @@ class ModelChange(models.Model):
         return u'%s was %s at %s' % (self.name,
                                      self.get_status_display(),
                                      self.timestamp)
-        
 
 def add_db_entry_on_model_save(sender, **kwargs):
+    """saves info on saved model in db due to
+       post save signal
+    """
     if kwargs['created']:
         status = '1'
     else:

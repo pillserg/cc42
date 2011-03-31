@@ -1,10 +1,10 @@
 import sys
 
-from django.core.management.base import AppCommand
 from django.core.management.base import BaseCommand
 
 
 class Command( BaseCommand ):
+    """Prints installed apps and models count for them."""
     help = 'Prints installed apps and models count for them.'
     requires_model_validation = True
 

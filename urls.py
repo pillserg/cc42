@@ -26,6 +26,8 @@ urlpatterns = patterns('',
         {'sort_by':'-priority'},
         name='show_last_requests_by_neg_priority'),
     
+    url(r'^test/$', 'cc42.contacts.views.testJQF'),
+    
     #auth
     url(r'^accounts/login/$',
         auth_views.login,

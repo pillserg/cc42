@@ -7,15 +7,17 @@ from cc42.contacts.models import UserDetail
 class CalendarWidget(forms.TextInput):
 
     class Media:
-        js = ('/admin/jsi18n/',
-              settings.ADMIN_MEDIA_PREFIX + 'js/core.js',
-              settings.ADMIN_MEDIA_PREFIX + "js/calendar.js",
-              settings.ADMIN_MEDIA_PREFIX + "js/admin/DateTimeShortcuts.js")
+        js = (settings.MEDIA_URL + "js/jquery.js",
+              settings.MEDIA_URL + "js/jquery.form.js",
+              # csrf token for AJAX POSTs
+              settings.MEDIA_URL + "js/csrftoken.js",
+              settings.MEDIA_URL + "js/initAjaxForm.js",
+              settings.MEDIA_URL + "js/datepicker/jquery-ui-1.8.11.custom.min.js",
+              settings.MEDIA_URL + "js/datepicker_init.js",
+        )
         css = {
-            'all': (
-                settings.ADMIN_MEDIA_PREFIX + 'css/forms.css',
-                settings.ADMIN_MEDIA_PREFIX + 'css/base.css',
-                settings.ADMIN_MEDIA_PREFIX + 'css/widgets.css',)
+            'all': (settings.MEDIA_URL +
+                    "css/datepicker/jquery-ui-1.8.11.custom.css",)
         }
 
     def __init__(self, attrs={}):
@@ -38,4 +40,6 @@ class UserDetailForm(forms.ModelForm):
         }
         
     
+
+
 

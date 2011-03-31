@@ -1,13 +1,5 @@
-{% extends 'base.html' %}
-{% block extra_head %}
-  {{form.media}}
-{% endblock %}
-
-{% block content %}
-  <div id="form_wrapper">
-  <div id="status">
-  </div>
-  <form action="." method="post" id="user_profile_edit">{% csrf_token %}
+  <form action="." method="post" id="user_profile_edit" enctype="multipart/form-data">
+  {% csrf_token %}
   {% if form.errors %}
     <p>Correct errors please</p>
   {% endif %}
@@ -55,10 +47,6 @@
             </td>
         </tr>
     </table>
+    <input type="submit" value="Save" /> <a href = {% url show_main_page %}>Cancel</a></p>
     {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
-    <input type="submit" value="Save" name="Form_save"  /> <a href = {% url show_main_page %}>Cancel</a></p>
-    
   </form>
-  </div>
- 
-{% endblock %}

@@ -5,7 +5,9 @@
 
 {% block content %}
   <div id="form_wrapper">
-  <form action="." method="post" id="user_profile_edit" enctype="multipart/form-data">{% csrf_token %}
+  <div id="status">
+  </div>
+  <form action="." method="post" id="user_profile_edit">{% csrf_token %}
   {% if form.errors %}
     <p>Correct errors please</p>
   {% endif %}
@@ -54,12 +56,9 @@
         </tr>
     </table>
     {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
-    <input value="Save" name="Form_save" type="submit" /> <a href = {% url show_main_page %}>Cancel</a></p>
+    <input type="submit" value="Save" name="Form_save"  /> <a href = {% url show_main_page %}>Cancel</a></p>
     
   </form>
-  </div>
-  
-  <div id="status">
   </div>
  
 {% endblock %}

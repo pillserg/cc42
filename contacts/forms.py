@@ -9,7 +9,11 @@ class CalendarWidget(forms.TextInput):
     class Media:
         js = (settings.MEDIA_URL + "js/jquery.js",
               settings.MEDIA_URL + "js/jquery.form.js",
+              # csrf token for AJAX POSTs
+              settings.MEDIA_URL + "js/csrftoken.js",
+              settings.MEDIA_URL + "js/initAjaxForm.js",
               settings.MEDIA_URL + "js/datepicker/jquery-ui-1.8.11.custom.min.js",
+              settings.MEDIA_URL + "js/datepicker_init.js",
         )
         css = {
             'all': (settings.MEDIA_URL +
@@ -36,4 +40,6 @@ class UserDetailForm(forms.ModelForm):
         }
         
     
+
+
 

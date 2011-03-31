@@ -108,7 +108,7 @@ class TestContactFormPage(HttpTestCase):
         for k,v in test_data.items():
             self.fv('1', k, v)    
         self.submit()
-        self.url(reverse('show_main_page'))
+        self.notfind("error")
         
         
     

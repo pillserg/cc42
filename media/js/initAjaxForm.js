@@ -2,13 +2,12 @@ $(document).ready(function() {
 	$("#status").html("Ready")
 	
 	function toggle_ui(bool){
+		$("#user_profile_edit").slideToggle("slow");
 		if (bool == true){
-			$("#user_profile_edit").slideToggle("slow");
 			$("#user_profile_edit *").attr("disabled", true);
 			$("#status").html("Sending...")
 		}
 		else{
-			$("#user_profile_edit").slideToggle("slow");
 			$("#user_profile_edit *").attr("disabled", false);
 			$("#status").html("Done")
 		}
@@ -25,7 +24,6 @@ $(document).ready(function() {
     };
 
     $('#user_profile_edit').ajaxForm(options);
-	
 });
 
 

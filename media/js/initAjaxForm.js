@@ -20,6 +20,7 @@ $(document).ready(function() {
 						},
         success:		function(){
 							toggle_ui(false);
+							initDatePicker();
 						}
     };
 

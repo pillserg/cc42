@@ -17,17 +17,17 @@ class SavedRequest(models.Model):
                               blank=True, null=True)
     user_agent = models.CharField(max_length=255, blank=True, null=True)
     language = models.CharField(max_length=255, blank=True, null=True)
-    
+
     class Meta:
         verbose_name = 'saved_request'
         verbose_name_plural = 'saved_requests'
-        ordering = ['-time',]
-    
+        ordering = ['-time', ]
+
     def __unicode__(self):
         return (u'request from %s to "%s" method %s at %s' %
                     (self.ip, self.path, self.method,
                      self.time.strftime('%Y-%m-%d %H:%M:%S')))
-    
+
     def from_http_request(self, request, commit=True, priority=0):
         # Request infomation
         self.method = request.method
@@ -37,13 +37,12 @@ class SavedRequest(models.Model):
         self.referer = request.META.get('HTTP_REFERER', '')[:255]
         self.user_agent = request.META.get('HTTP_USER_AGENT', '')[:255]
         self.language = request.META.get('HTTP_ACCEPT_LANGUAGE', '')[:255]
-        
+
         if getattr(request, 'user', False):
             if request.user.is_authenticated():
                 self.user = request.user
         if priority != 0:
             self.priority = priority
-        
+
         if commit:
             self.save()
-    

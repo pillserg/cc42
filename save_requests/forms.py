@@ -1,5 +1,6 @@
 from django import forms
 
+
 class PriorityChangeForm(forms.Form):
     """Simple form for changing SavedRequests prioriy"""
     priority = forms.IntegerField()

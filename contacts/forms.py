@@ -3,6 +3,7 @@ from django import forms
 from django.conf import settings
 from cc42.contacts.models import UserDetail
 
+
 class CalendarWidget(forms.TextInput):
     """date widget using datepicker from jQueryUI"""
     class Media:
@@ -17,14 +18,13 @@ class CalendarWidget(forms.TextInput):
         )
         css = {
             'all': (settings.MEDIA_URL +
-                    "css/datepicker/jquery-ui-1.8.11.custom.css",)
-        }
+                    "css/datepicker/jquery-ui-1.8.11.custom.css",)}
 
     def __init__(self, attrs={}):
         """init super widget"""
         super(CalendarWidget, self).__init__(
-            attrs={'class': 'vDateField', 'size': '10'}
-            )
+            attrs={'class': 'vDateField', 'size': '10'})
+
 
 class UserDetailForm(forms.ModelForm):
     """ModelForm for editing user details"""
@@ -36,10 +36,5 @@ class UserDetailForm(forms.ModelForm):
     class Meta:
         model = UserDetail
         widgets = {
-            'date_of_birth':CalendarWidget(),
+            'date_of_birth': CalendarWidget(),
         }
-        
-    
-
-
-
